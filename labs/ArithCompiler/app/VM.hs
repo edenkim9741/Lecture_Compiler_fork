@@ -47,3 +47,9 @@ runInstr (InstrOp op) env stack =
       OPSUB -> (env, push (n2 - n1) stack2) 
       OPMUL -> (env, push (n2 * n1) stack2) 
       OPDIV -> (env, push (n2 `div` n1) stack)
+  
+runInstr (IfZ expr_list1 expr_list2) env stack =
+  let (n1, stack1) = pop stack
+  in if n1==0
+      then runInstrList expr_list1 env stack1
+      else runInstrList expr_list2 env stack1

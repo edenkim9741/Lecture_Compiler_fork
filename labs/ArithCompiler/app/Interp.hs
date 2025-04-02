@@ -26,6 +26,12 @@ evalExpr (BinOp op e1 e2) env =
         OPSUB -> (v1 - v2, env2)
         OPMUL -> (v1 * v2, env2)
         OPDIV -> (v1 `div` v2, env2)
+
+evalExpr (IfZero e1 e2 e3) env =
+    let (condi, _) = evalExpr e1 env
+    in if condi==0
+        then evalExpr e2 env
+        else evalExpr e3 env
     
 evalSeq :: [Expr] -> Env -> Env
 evalSeq [] env = env
